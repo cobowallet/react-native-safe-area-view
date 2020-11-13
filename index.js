@@ -7,14 +7,10 @@ import {
   Animated,
 } from 'react-native';
 import hoistStatics from 'hoist-non-react-statics';
-
+import { isIphoneX as isIphoneXHelper } from 'react-native-iphone-x-helper'
 import withOrientation from './withOrientation';
 
 // See https://mydevice.io/devices/ for device dimensions
-const X_WIDTH = 375;
-const X_HEIGHT = 812;
-const XSMAX_WIDTH = 414;
-const XSMAX_HEIGHT = 896;
 const PAD_WIDTH = 768;
 const PAD_HEIGHT = 1024;
 const IPADPRO11_WIDTH = 834;
@@ -34,15 +30,9 @@ const PlatformConstants = Platform.constants || {};
 const { minor = 0 } = PlatformConstants.reactNativeVersion || {};
 
 const isIPhoneX = (() => {
-  if (Platform.OS === 'web') return false;
+  if (Platform.OS !== 'ios') return false;
 
-  return (
-    (Platform.OS === 'ios' &&
-      ((D_HEIGHT === X_HEIGHT && D_WIDTH === X_WIDTH) ||
-        (D_HEIGHT === X_WIDTH && D_WIDTH === X_HEIGHT))) ||
-    ((D_HEIGHT === XSMAX_HEIGHT && D_WIDTH === XSMAX_WIDTH) ||
-      (D_HEIGHT === XSMAX_WIDTH && D_WIDTH === XSMAX_HEIGHT))
-  );
+  return isIphoneXHelper();
 })();
 
 const isNewIPadPro = (() => {
